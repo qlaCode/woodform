@@ -12,6 +12,10 @@
     "dev": "concurrently \"npm run dev:studio\" \"npm run dev:web\"",
     "type-check": "npm run type-check --workspaces --if-present"
   },
+  "dependencies": {
+    "@sanity/client": "^6.9.0",
+    "@sanity/image-url": "^1.0.2"
+  },
   "devDependencies": {
     "concurrently": "^8.0.1"
   },
