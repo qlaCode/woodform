@@ -6,6 +6,10 @@
   ],
   "compilerOptions": {
     "allowJs": true,
-    "module": "CommonJS"
+    "module": "CommonJS",
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "types": ["@sanity/image-url"]
   }
 }
