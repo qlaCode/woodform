@@ -1,0 +1,22 @@
+{
+  "name": "woodform",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "studio-woodform",
+    "web"
+  ],
+  "scripts": {
+    "dev:studio": "cd studio-woodform && npm run dev",
+    "dev:web": "cd web && npm run dev",
+    "dev": "concurrently \"npm run dev:studio\" \"npm run dev:web\"",
+    "type-check": "npm run type-check --workspaces --if-present"
+  },
+  "devDependencies": {
+    "concurrently": "^8.0.1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
