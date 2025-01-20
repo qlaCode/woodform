@@ -7,7 +7,7 @@ function App() {
   return (
     <main className="flex flex-col items-center justify-center gap-6 m-6">
       <img
-        src="./src/assets/woodpecker.gif"
+        src="/woodpecker.gif"
         alt="Woodpecker"
         className="fixed top-4 right-0 w-16"
       />
