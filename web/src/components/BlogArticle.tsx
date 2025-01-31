@@ -24,7 +24,16 @@ export default function BlogArticle() {
     async function fetchArticle() {
       try {
         const result = await sanityClient.fetch<Article>(
-          `*[_type == "article" && _id == $id][0]`,
+          `*[_type == "article" && _id == $id][0]{
+            _id,
+            name,
+            category,
+            year,
+            details,
+            subtitle,
+            image,
+            gallery
+          }`,
           { id }
         );
         setArticle(result);
@@ -32,8 +41,11 @@ export default function BlogArticle() {
         console.log(error);
       }
     }
-    fetchArticle();
-  }, [id]);
+
+    if (id) {
+      fetchArticle();
+    }
+  }, [id]); // Re-run when id changes
 
   if (!article) return <div>Loading...</div>;
 
@@ -76,13 +88,13 @@ export default function BlogArticle() {
 
         {article.image && (
           <div
-            className="mb-8 cursor-pointer"
+            className="mb-8 cursor-pointer relative w-full h-auto"
             onClick={() => setSelectedImageIndex(0)}
           >
             <img
               src={urlForImage(article.image)}
               alt="Main article image"
-              className="h-96 w-full rounded-lg object-cover shadow-lg"
+              className="h-auto w-full rounded-lg object-contain shadow-lg"
             />
           </div>
         )}

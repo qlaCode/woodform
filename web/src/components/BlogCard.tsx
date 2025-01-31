@@ -1,7 +1,7 @@
 import { PortableText } from "@portabletext/react";
 import React from "react";
 import { Link } from "react-router-dom";
-import { urlForImage } from "../../../common/sanityclient";
+import { sanityImageBuilder, urlForImage } from "../../../common/sanityclient";
 import { Article } from "../../../common/types";
 
 export default function BlogCard({
@@ -19,6 +19,17 @@ export default function BlogCard({
     return `${x}% ${y}%`;
   };
 
+  const getThumbnailUrl = (image: any) => {
+    return sanityImageBuilder
+      .image(image)
+      .width(1000) // Increased from 400 to 1000
+      .height(750) // Proportionally increased from 300 to 750
+      .fit("crop")
+      .crop("entropy")
+      .quality(90) // Added quality parameter
+      .url();
+  };
+
   return (
     <Link to={`/article/${_id}`} className="group block">
       <div className="group block">
@@ -29,7 +40,7 @@ export default function BlogCard({
           <div className="relative h-48 w-full">
             {image && (
               <img
-                src={urlForImage(image)}
+                src={getThumbnailUrl(image)}
                 className="h-full w-full object-cover transition-transform duration-200 group-hover:scale-105"
                 style={{ objectPosition: getImagePosition() }}
                 alt={image.alt || name}
