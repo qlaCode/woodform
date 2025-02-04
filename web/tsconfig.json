@@ -1,15 +1,16 @@
 {
+  "compilerOptions": {
+    "module": "es2015",
+    "moduleResolution": "bundler",
+    "allowJs": true,
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "types": ["@sanity/image-url"],
+    "noEmit": true
+  },
   "files": [],
   "references": [
     { "path": "./tsconfig.app.json" },
     { "path": "./tsconfig.node.json" }
-  ],
-  "compilerOptions": {
-    "allowJs": true,
-    "module": "CommonJS",
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
-    "resolveJsonModule": true,
-    "types": ["@sanity/image-url"]
-  }
+  ]
 }
