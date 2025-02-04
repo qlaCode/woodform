@@ -1,7 +1,9 @@
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
+import About from "./components/About";
 import BlogArticle from "./components/BlogArticle";
 import BlogCardList from "./components/BlogCardList";
+import Contact from "./components/Contact";
 import Header from "./components/Header";
 
 function App() {
@@ -12,6 +14,8 @@ function App() {
         <Routes>
           <Route path="/" element={<BlogCardList />} />
           <Route path="/article/:id" element={<BlogArticle />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
         </Routes>
       </main>
     </div>
