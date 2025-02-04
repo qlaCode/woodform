@@ -18,7 +18,7 @@ export default function BlogCardList() {
         }, subtitle} | order(year desc)`
       );
       setContent(result);
-      console.log(result);
+      // console.log(result);
     } catch (error) {
       console.log(error);
     }

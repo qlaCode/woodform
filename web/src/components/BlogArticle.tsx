@@ -8,6 +8,7 @@ import Lightbox from "./Lightbox";
 
 export default function BlogArticle() {
   const { id } = useParams();
+
   const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(
     null
   );
@@ -36,16 +37,17 @@ export default function BlogArticle() {
           }`,
           { id }
         );
+        // console.log("Query result:", result);
         setArticle(result);
       } catch (error) {
-        console.log(error);
+        console.error("Error fetching article:", error);
       }
     }
 
     if (id) {
       fetchArticle();
     }
-  }, [id]); // Re-run when id changes
+  }, []);
 
   if (!article) return <div>Loading...</div>;
 
