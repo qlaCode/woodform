@@ -1,8 +1,8 @@
 import { PortableText } from "@portabletext/react";
 import React from "react";
 import { Link } from "react-router-dom";
-import { sanityImageBuilder, urlForImage } from "../../../common/sanityclient";
-import { Article } from "../../../common/types";
+import { sanityImageBuilder } from "../../../common/sanityclient";
+import { Article, SanityImage } from "../../../common/types";
 
 export default function BlogCard({
   name,
@@ -13,21 +13,30 @@ export default function BlogCard({
   _id,
 }: Article) {
   const getImagePosition = () => {
-    if (!image?.hotspot) return "center"; // fallback to center if no hotspot
+    if (!image?.hotspot) return "center";
     const x = image.hotspot.x * 100;
     const y = image.hotspot.y * 100;
     return `${x}% ${y}%`;
   };
 
-  const getThumbnailUrl = (image: any) => {
-    return sanityImageBuilder
+  const getThumbnailUrl = (image: SanityImage) => {
+    let builder = sanityImageBuilder
       .image(image)
-      .width(1000) // Increased from 400 to 1000
-      .height(750) // Proportionally increased from 300 to 750
-      .fit("crop")
-      .crop("entropy")
-      .quality(90) // Added quality parameter
-      .url();
+      .width(1000)
+      .height(750)
+      .quality(90);
+
+    // If we have hotspot data, use it
+    if (image.hotspot) {
+      builder = builder
+        .fit("crop")
+        .crop("focalpoint")
+        .focalPoint(image.hotspot.x, image.hotspot.y);
+    } else {
+      builder = builder.fit("crop").crop("entropy");
+    }
+
+    return builder.url();
   };
 
   return (

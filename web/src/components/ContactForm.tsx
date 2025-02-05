@@ -96,7 +96,7 @@ const ContactForm: React.FC = () => {
   }
 
   return (
-    <div className="max-w-2xl mx-auto mt-10 px-4">
+    <div className="max-w-2xl mx-auto px-4">
       <h2 className="text-[#10A588] text-3xl font-mono font-medium mb-6">
         Contact Me
       </h2>

@@ -11,7 +11,7 @@ export const GalleryFilter: React.FC = () => {
   ];
 
   return (
-    <div className="flex items-center gap-4 mb-8">
+    <div className="flex items-center gap-4 mb-8 flex-col md:flex-row">
       <h3 className="text-lg font-semibold whitespace-nowrap">Projects:</h3>
       <div className="flex flex-wrap gap-3">
         {filterOptions.map((option) => (

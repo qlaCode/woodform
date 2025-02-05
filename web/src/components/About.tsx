@@ -15,33 +15,39 @@ Feel free to explore the gallery and contact me.
 `;
 
   return (
-    <div className="max-w-2xl mx-auto p-6 text-center gap-4 flex flex-col">
-      <img
-        src={profileImage}
-        alt={`${name}'s Profile`}
-        className="w-40 h-40 rounded-full mx-auto mb-4 object-cover"
-      />
-      <h2 className="text-2xl font-bold font-mono mb-2">{name}</h2>
-      <Link
-        to="/contact"
-        className="bg-[#10A588] hover:bg-[#0D8C73] text-white font-bold py-2 px-4 w-1/3 self-center rounded focus:outline-none focus:shadow-outline transition-all duration-300"
-      >
-        Contact Me
-      </Link>
-      <div className="w-full p-6 bg-white rounded-lg shadow-lg">
-        <h2 className="text-xl font-bold mb-6 text-left">My Story</h2>
-        <div className="space-y-4 text-left">
-          {description
-            .split("\n")
-            .filter((line) => line.trim() !== "")
-            .map((line, i) => (
-              <p key={i} className="text-gray-700">
-                {line}
-              </p>
-            ))}
+    <div>
+      <h2 className="text-[#10A588] text-3xl font-mono font-medium mb-6">
+        About me
+      </h2>
+
+      <div className="max-w-2xl mx-auto p-6 text-center gap-4 flex flex-col">
+        <img
+          src={profileImage}
+          alt={`${name}'s Profile`}
+          className="w-40 h-40 rounded-full mx-auto mb-4 object-cover"
+        />
+        <h2 className="text-2xl font-bold font-mono mb-2">{name}</h2>
+        <Link
+          to="/contact"
+          className="bg-[#10A588] hover:bg-[#0D8C73] text-white font-bold py-2 px-4 w-1/3 self-center rounded focus:outline-none focus:shadow-outline transition-all duration-300"
+        >
+          Contact Me
+        </Link>
+        <div className="w-full p-6 bg-white rounded-lg shadow-lg">
+          <h2 className="text-xl font-bold mb-6 text-left">My Story</h2>
+          <div className="space-y-4 text-left">
+            {description
+              .split("\n")
+              .filter((line) => line.trim() !== "")
+              .map((line, i) => (
+                <p key={i} className="text-gray-700">
+                  {line}
+                </p>
+              ))}
+          </div>
         </div>
+        <TableCourses />
       </div>
-      <TableCourses />
     </div>
   );
 }

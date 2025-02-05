@@ -21,7 +21,7 @@ const WoodworkingEducation = () => {
     {
       year: "2016",
       duration: "1 week",
-      course: "Table Top Fabrication",
+      course: "Traditional Woorworking + Tray Fabrication",
       institution: "Robinson Studio (Marc Fish)",
       institutionUrl: "https://www.marcfish.co.uk/",
       location: "East Sussex, UK",

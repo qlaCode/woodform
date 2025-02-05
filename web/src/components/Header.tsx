@@ -94,18 +94,24 @@ export default function Header() {
         {/* Mobile Navigation */}
         {isMenuOpen && (
           <nav className="md:hidden mt-4 pb-4">
-            <Link to="/" className={`block py-2 ${navLinkClass("/")}`}>
+            <Link
+              to="/"
+              className={`block py-2 ${navLinkClass("/")}`}
+              onClick={toggleMenu}
+            >
               Gallery
             </Link>
             <Link
               to="/about"
               className={`block py-2 ${navLinkClass("/about")}`}
+              onClick={toggleMenu}
             >
               About
             </Link>
             <Link
               to="/contact"
               className={`block py-2 ${navLinkClass("/contact")}`}
+              onClick={toggleMenu}
             >
               Contact
             </Link>

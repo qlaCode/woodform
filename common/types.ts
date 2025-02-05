@@ -19,12 +19,9 @@ export type SanityImage = {
   };
 };
 
-export type GalleryDisplayType = "stacked" | "inline" | "carousel";
-
 export type Gallery = {
   _type: "gallery";
   images: SanityImage[];
-  display: GalleryDisplayType;
   zoom: boolean;
 };
 
