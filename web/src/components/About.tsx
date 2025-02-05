@@ -16,11 +16,10 @@ Feel free to explore the gallery and contact me.
 
   return (
     <div>
-      <h2 className="text-[#10A588] text-3xl font-mono font-medium mb-6">
-        About me
-      </h2>
-
       <div className="max-w-2xl mx-auto p-6 text-center gap-4 flex flex-col">
+        <h2 className="text-[#10A588] text-3xl font-mono font-medium mb-6 ">
+          About me
+        </h2>
         <img
           src={profileImage}
           alt={`${name}'s Profile`}
