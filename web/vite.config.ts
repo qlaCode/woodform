@@ -24,4 +24,12 @@ export default defineConfig({
       transformMixedEsModules: true,
     },
   },
+  server: {
+    proxy: {
+      "/api/contact": {
+        target: "http://localhost:3000",
+        changeOrigin: true,
+      },
+    },
+  },
 });

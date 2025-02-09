@@ -58,3 +58,4 @@ lerna-debug.log*
 .DS_Store
 /WoodForm
 .vercel
+.env*.local

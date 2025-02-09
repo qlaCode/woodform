@@ -1,16 +1,15 @@
 {
   "compilerOptions": {
+    "target": "ESNext",
     "module": "es2015",
-    "moduleResolution": "bundler",
+    "moduleResolution": "node",
     "allowJs": true,
-    "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "types": ["@sanity/image-url"],
-    "noEmit": true
+    "noEmit": true,
+    "esModuleInterop": true,
+    "jsx": "react-jsx"
   },
-  "files": [],
-  "references": [
-    { "path": "./tsconfig.app.json" },
-    { "path": "./tsconfig.node.json" }
-  ]
+  "include": ["src", "api"],
+  "exclude": ["node_modules"]
 }

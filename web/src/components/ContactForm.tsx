@@ -6,7 +6,7 @@ interface FormData {
   name: string;
   email: string;
   message: string;
-  honeypot: string; // Added honeypot field
+  honeypot: string;
 }
 
 const ContactForm: React.FC = () => {
@@ -15,23 +15,24 @@ const ContactForm: React.FC = () => {
     name: "",
     email: "",
     message: "",
-    honeypot: "", // Initialize honeypot field
+    honeypot: "",
   });
 
   const [errors, setErrors] = useState<Partial<FormData>>({});
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
-    setFormData((prevState) => ({
-      ...prevState,
+    setFormData((prev) => ({
+      ...prev,
       [name]: value,
     }));
   };
 
-  const validateForm = (): boolean => {
+  const validateForm = () => {
     const newErrors: Partial<FormData> = {};
     let isValid = true;
 
@@ -59,38 +60,65 @@ const ContactForm: React.FC = () => {
     return isValid;
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault(); // This is the only place the event is used, so we can keep it.
     if (validateForm() && formData.honeypot === "") {
-      // Check if honeypot is empty
-      console.log("Form submitted:", formData);
-      setIsSubmitted(true);
-      setFormData({
-        subject: "",
-        name: "",
-        email: "",
-        message: "",
-        honeypot: "",
-      });
+      setIsLoading(true);
+      try {
+        const response = await fetch("/api/contact", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            subject: formData.subject,
+            name: formData.name,
+            email: formData.email,
+            message: formData.message,
+          }),
+        });
+
+        const text = await response.text();
+
+        // Try to parse if it's JSON
+        try {
+          const data = JSON.parse(text);
+          if (!response.ok) {
+            throw new Error(`Failed to send email: ${data.error}`);
+          }
+        } catch (parseError) {
+          console.error("Failed to parse response:", parseError);
+          throw new Error("Failed to parse response");
+        }
+
+        setIsSubmitted(true);
+        setFormData({
+          subject: "",
+          name: "",
+          email: "",
+          message: "",
+          honeypot: "",
+        });
+      } catch (error) {
+        console.error("Failed to send email:", error);
+      } finally {
+        setIsLoading(false);
+      }
     }
   };
 
-  const inputClass = (error?: string) => `
-    w-full px-3 py-2 text-slate-800 bg-white border 
-    ${error ? "border-red-500" : "border-slate-300"} 
-    rounded-md focus:outline-none focus:ring-2 focus:ring-[#10A588] 
-    transition-all duration-300
-  `;
+  const inputClass = (error?: string) =>
+    `w-full p-2 border rounded ${
+      error ? "border-red-500" : "border-gray-300"
+    } focus:outline-none focus:border-[#10A588]`;
 
   if (isSubmitted) {
     return (
-      <div className="max-w-2xl mx-auto mt-10 px-4 text-center">
-        <h2 className="text-[#10A588] text-3xl font-mono font-medium mb-6">
+      <div className="text-center p-6">
+        <h3 className="text-[#10A588] text-xl mb-4">
           Thank you for your message!
-        </h2>
-        <p className="text-slate-800">
-          I'll get back to you as soon as possible.
-        </p>
+        </h3>
+        <p className="text-gray-600">I'll get back to you soon.</p>
       </div>
     );
   }
@@ -103,48 +131,29 @@ const ContactForm: React.FC = () => {
       <form onSubmit={handleSubmit} className="space-y-6">
         <div>
           <label
-            className="block text-slate-800 text-sm font-bold mb-2"
-            htmlFor="subject"
-          >
-            Subject
-          </label>
-          <input
-            className={inputClass(errors.subject)}
-            id="subject"
-            type="text"
-            placeholder="Subject"
-            name="subject"
-            value={formData.subject}
-            onChange={handleChange}
-          />
-          {errors.subject && (
-            <p className="text-red-500 text-xs mt-1">{errors.subject}</p>
-          )}
-        </div>
-        <div>
-          <label
-            className="block text-slate-800 text-sm font-bold mb-2"
             htmlFor="name"
+            className="block text-slate-800 text-sm font-bold mb-2"
           >
-            Name
+            Your Name
           </label>
           <input
             className={inputClass(errors.name)}
             id="name"
             type="text"
-            placeholder="Your Name"
             name="name"
             value={formData.name}
             onChange={handleChange}
+            placeholder="Your name"
           />
           {errors.name && (
-            <p className="text-red-500 text-xs mt-1">{errors.name}</p>
+            <p className="text-red-500 text-sm mt-1">{errors.name}</p>
           )}
         </div>
+
         <div>
           <label
-            className="block text-slate-800 text-sm font-bold mb-2"
             htmlFor="email"
+            className="block text-slate-800 text-sm font-bold mb-2"
           >
             Email
           </label>
@@ -152,55 +161,76 @@ const ContactForm: React.FC = () => {
             className={inputClass(errors.email)}
             id="email"
             type="email"
-            placeholder="your@email.com"
             name="email"
             value={formData.email}
             onChange={handleChange}
+            placeholder="Your email"
           />
           {errors.email && (
-            <p className="text-red-500 text-xs mt-1">{errors.email}</p>
+            <p className="text-red-500 text-sm mt-1">{errors.email}</p>
           )}
         </div>
+
         <div>
           <label
+            htmlFor="subject"
             className="block text-slate-800 text-sm font-bold mb-2"
+          >
+            Subject
+          </label>
+          <input
+            className={inputClass(errors.subject)}
+            id="subject"
+            type="text"
+            name="subject"
+            value={formData.subject}
+            onChange={handleChange}
+            placeholder="Subject"
+          />
+          {errors.subject && (
+            <p className="text-red-500 text-sm mt-1">{errors.subject}</p>
+          )}
+        </div>
+
+        <div>
+          <label
             htmlFor="message"
+            className="block text-slate-800 text-sm font-bold mb-2"
           >
             Message
           </label>
           <textarea
-            className={`${inputClass(errors.message)} h-32 resize-none`}
+            className={inputClass(errors.message)}
             id="message"
-            placeholder="Your message here"
             name="message"
             value={formData.message}
             onChange={handleChange}
-          ></textarea>
+            rows={4}
+            placeholder="Your message"
+          />
           {errors.message && (
-            <p className="text-red-500 text-xs mt-1">{errors.message}</p>
+            <p className="text-red-500 text-sm mt-1">{errors.message}</p>
           )}
         </div>
+
         {/* Honeypot field */}
-        <div className="hidden">
-          <label htmlFor="honeypot">Leave this field empty</label>
-          <input
-            type="text"
-            id="honeypot"
-            name="honeypot"
-            value={formData.honeypot}
-            onChange={handleChange}
-            tabIndex={-1}
-            autoComplete="off"
-          />
-        </div>
-        <div>
-          <button
-            className="bg-[#10A588] hover:bg-[#0D8C73] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-all duration-300"
-            type="submit"
-          >
-            Send Message
-          </button>
-        </div>
+        <input
+          type="text"
+          name="honeypot"
+          value={formData.honeypot}
+          onChange={handleChange}
+          style={{ display: "none" }}
+          tabIndex={-1}
+          autoComplete="off"
+        />
+
+        <button
+          type="submit"
+          disabled={isLoading}
+          className="w-full bg-[#10A588] text-white py-2 px-4 rounded hover:bg-[#0D8C73] transition-colors disabled:bg-gray-400"
+        >
+          {isLoading ? "Sending..." : "Send Message"}
+        </button>
       </form>
     </div>
   );
