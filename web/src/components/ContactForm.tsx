@@ -1,6 +1,9 @@
 import type React from "react";
 import { useState, type FormEvent } from "react";
 
+// cmd contact forn :
+// npx vercel dev
+
 interface FormData {
   subject: string;
   name: string;

@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { Language, useLanguage } from "./LanguageContext";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
+  const { selectedLanguage, setSelectedLanguage } = useLanguage();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -20,6 +22,12 @@ export default function Header() {
         : ""
     }`;
   };
+
+  const languages: { code: Language; flag: string }[] = [
+    { code: "en", flag: "🇬🇧" },
+    { code: "fr", flag: "🇫🇷" },
+    { code: "de", flag: "🇩🇪" },
+  ];
 
   return (
     <header className="fixed top-0 left-0 right-0 bg-white shadow-md z-10">
@@ -42,7 +50,7 @@ export default function Header() {
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex space-x-6">
+          <nav className="hidden md:flex items-center space-x-6">
             <Link to="/" className={navLinkClass("/")}>
               Gallery
             </Link>
@@ -52,6 +60,24 @@ export default function Header() {
             <Link to="/contact" className={navLinkClass("/contact")}>
               Contact
             </Link>
+
+            {/* Language Switcher */}
+            <div className="flex gap-2 ml-4 border-l pl-4 border-gray-200">
+              {languages.map(({ code, flag }) => (
+                <button
+                  key={code}
+                  onClick={() => setSelectedLanguage(code)}
+                  className={`p-1 rounded transition-all duration-200 ${
+                    selectedLanguage === code
+                      ? "bg-gray-100 shadow-sm"
+                      : "hover:bg-gray-50"
+                  }`}
+                  aria-label={`Switch to ${code.toUpperCase()}`}
+                >
+                  <span className="text-lg">{flag}</span>
+                </button>
+              ))}
+            </div>
           </nav>
 
           {/* Mobile Menu Button */}
@@ -115,6 +141,27 @@ export default function Header() {
             >
               Contact
             </Link>
+
+            {/* Mobile Language Switcher */}
+            <div className="flex gap-2 mt-4 pt-4 border-t border-gray-200">
+              {languages.map(({ code, flag }) => (
+                <button
+                  key={code}
+                  onClick={() => {
+                    setSelectedLanguage(code);
+                    toggleMenu();
+                  }}
+                  className={`p-2 rounded transition-all duration-200 ${
+                    selectedLanguage === code
+                      ? "bg-gray-100 shadow-sm"
+                      : "hover:bg-gray-50"
+                  }`}
+                  aria-label={`Switch to ${code.toUpperCase()}`}
+                >
+                  <span className="text-lg">{flag}</span>
+                </button>
+              ))}
+            </div>
           </nav>
         )}
       </div>

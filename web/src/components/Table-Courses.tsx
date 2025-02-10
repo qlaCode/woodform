@@ -73,10 +73,12 @@ const WoodworkingEducation = () => {
       <h2 className="text-xl font-bold mb-6 text-left">
         Woodworking Education
       </h2>
-      <div className="overflow-x-auto">
+
+      {/* Table view for medium screens and up */}
+      <div className="hidden md:block overflow-x-auto">
         <table className="w-full">
           <thead>
-            <tr className="bg-gray-100 ">
+            <tr className="bg-gray-100">
               <th className="p-3 text-center font-semibold">Year</th>
               <th className="p-3 text-center font-semibold">Duration</th>
               <th className="p-3 text-center font-semibold">Course</th>
@@ -108,6 +110,37 @@ const WoodworkingEducation = () => {
             ))}
           </tbody>
         </table>
+      </div>
+
+      {/* Card view for small screens */}
+      <div className="md:hidden space-y-4">
+        {courses.map((course, index) => (
+          <div
+            key={index}
+            className="bg-white rounded-lg shadow p-4 border border-gray-200"
+          >
+            <div className="flex justify-between items-center mb-2 ">
+              <span className="text-sm font-semibold bg-gray-100 px-2 py-1 rounded">
+                {course.year}
+              </span>
+              <span className="text-sm text-gray-600">{course.duration}</span>
+            </div>
+            <h3 className="font-medium mb-2 text-left">{course.course}</h3>
+            <div className="text-sm space-y-1 text-left">
+              <div>
+                <a
+                  href={course.institutionUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[#10A588] hover:text-blue-800 hover:underline underline"
+                >
+                  {course.institution}
+                </a>
+              </div>
+              <div className="text-gray-600">{course.location}</div>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );

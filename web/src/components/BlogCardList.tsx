@@ -35,11 +35,11 @@ export default function BlogCardList() {
         params
       );
 
-      // Debug log
-      console.log(
-        "Fetched content first item:",
-        JSON.stringify(result[0]?.image, null, 2)
-      );
+      // // Debug log
+      // console.log(
+      //   "Fetched content first item:",
+      //   JSON.stringify(result[0]?.image, null, 2)
+      // );
 
       setContent(result);
     } catch (error) {
