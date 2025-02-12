@@ -2,16 +2,47 @@ import { PortableText } from "@portabletext/react";
 import React from "react";
 import { Link } from "react-router-dom";
 import { sanityImageBuilder } from "../../../common/sanityclient";
-import { Article, SanityImage } from "../../../common/types";
+import { Article, Language, SanityImage } from "../../../common/types";
+
+function getLocalizedField<T>(
+  englishVersion: T,
+  lang: Language,
+  translations: {
+    fr?: T;
+    de?: T;
+  }
+): T {
+  switch (lang) {
+    case "fr":
+      return translations.fr || englishVersion;
+    case "de":
+      return translations.de || englishVersion;
+    default:
+      return englishVersion;
+  }
+}
+
+// Usage in the component:
+
+interface BlogCardProps extends Article {
+  selectedLanguage: Language;
+}
 
 export default function BlogCard({
   name,
+  nameFr,
+  nameDe,
   category,
+  categoryFr,
+  categoryDe,
   year,
   subtitle,
+  subtitleFr,
+  subtitleDe,
   image,
   _id,
-}: Article) {
+  selectedLanguage,
+}: BlogCardProps) {
   const getImagePosition = () => {
     if (!image?.hotspot) return "center";
     const x = image.hotspot.x * 100;
@@ -26,7 +57,6 @@ export default function BlogCard({
       .height(750)
       .quality(90);
 
-    // If we have hotspot data, use it
     if (image.hotspot) {
       builder = builder
         .fit("crop")
@@ -38,6 +68,19 @@ export default function BlogCard({
 
     return builder.url();
   };
+
+  const localizedName = getLocalizedField(name, selectedLanguage, {
+    fr: nameFr,
+    de: nameDe,
+  });
+  const localizedCategory = getLocalizedField(category, selectedLanguage, {
+    fr: categoryFr,
+    de: categoryDe,
+  });
+  const localizedSubtitle = getLocalizedField(subtitle, selectedLanguage, {
+    fr: subtitleFr,
+    de: subtitleDe,
+  });
 
   return (
     <Link to={`/article/${_id}`} className="group block">
@@ -52,21 +95,23 @@ export default function BlogCard({
                 src={getThumbnailUrl(image)}
                 className="h-full w-full object-cover transition-transform duration-200 group-hover:scale-105"
                 style={{ objectPosition: getImagePosition() }}
-                alt={image.alt || name}
+                alt={image.alt || localizedName}
               />
             )}
           </div>
           <div className="p-4">
             <div className="mb-2 flex items-center justify-between">
-              <h2 className="text-xl font-bold text-gray-800">{name}</h2>
+              <h2 className="text-xl font-bold text-gray-800">
+                {localizedName}
+              </h2>
               <span className="text-sm font-semibold text-gray-600">
                 {year}
               </span>
             </div>
-            <p className="text-gray-600">{category}</p>
-            <p className="text-gray-600">
-              <PortableText value={subtitle} />
-            </p>
+            <p className="text-gray-600">{localizedCategory}</p>
+            <div className="text-gray-600">
+              <PortableText value={localizedSubtitle} />
+            </div>
           </div>
         </div>
       </div>

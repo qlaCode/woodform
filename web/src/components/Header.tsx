@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Language, useLanguage } from "./LanguageContext";
+import { translations } from "./translations";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -52,13 +53,13 @@ export default function Header() {
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-6">
             <Link to="/" className={navLinkClass("/")}>
-              Gallery
+              {translations.nav.gallery[selectedLanguage]}
             </Link>
             <Link to="/about" className={navLinkClass("/about")}>
-              About Me
+              {translations.nav.about[selectedLanguage]}
             </Link>
             <Link to="/contact" className={navLinkClass("/contact")}>
-              Contact
+              {translations.nav.contact[selectedLanguage]}
             </Link>
 
             {/* Language Switcher */}
@@ -125,21 +126,21 @@ export default function Header() {
               className={`block py-2 ${navLinkClass("/")}`}
               onClick={toggleMenu}
             >
-              Gallery
+              {translations.nav.gallery[selectedLanguage]}
             </Link>
             <Link
               to="/about"
               className={`block py-2 ${navLinkClass("/about")}`}
               onClick={toggleMenu}
             >
-              About
+              {translations.nav.about[selectedLanguage]}
             </Link>
             <Link
               to="/contact"
               className={`block py-2 ${navLinkClass("/contact")}`}
               onClick={toggleMenu}
             >
-              Contact
+              {translations.nav.contact[selectedLanguage]}
             </Link>
 
             {/* Mobile Language Switcher */}

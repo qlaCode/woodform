@@ -1,6 +1,8 @@
 import { PortableTextBlock } from "@sanity/types";
 import React from "react";
 
+export type Language = "en" | "fr" | "de";
+
 export type SanityImage = {
   asset: {
     _ref: string;
@@ -28,9 +30,17 @@ export type Gallery = {
 export type Article = {
   _id: string;
   name: string;
+  nameFr?: string;
+  nameDe?: string;
   category: string;
+  categoryFr?: string;
+  categoryDe?: string;
   subtitle: PortableTextBlock[];
+  subtitleFr?: PortableTextBlock[];
+  subtitleDe?: PortableTextBlock[];
   details: PortableTextBlock[];
+  detailsFr?: PortableTextBlock[];
+  detailsDe?: PortableTextBlock[];
   year: number;
   image?: SanityImage;
   gallery?: Gallery;

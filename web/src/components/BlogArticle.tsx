@@ -4,11 +4,30 @@ import { Link, useParams } from "react-router-dom";
 import { sanityClient, urlForImage } from "../../../common/sanityclient";
 import { Article } from "../../../common/types";
 import ArticleGallery from "./ArticleGallery";
+import { Language, useLanguage } from "./LanguageContext";
 import Lightbox from "./Lightbox";
+
+function getLocalizedField<T>(
+  englishVersion: T,
+  lang: Language,
+  translations: {
+    fr?: T;
+    de?: T;
+  }
+): T {
+  switch (lang) {
+    case "fr":
+      return translations.fr || englishVersion;
+    case "de":
+      return translations.de || englishVersion;
+    default:
+      return englishVersion;
+  }
+}
 
 export default function BlogArticle() {
   const { id } = useParams();
-
+  const { selectedLanguage } = useLanguage();
   const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(
     null
   );
@@ -28,16 +47,23 @@ export default function BlogArticle() {
           `*[_type == "article" && _id == $id][0]{
             _id,
             name,
+            nameFr,
+            nameDe,
             category,
+            categoryFr,
+            categoryDe,
             year,
             details,
+            detailsFr,
+            detailsDe,
             subtitle,
+            subtitleFr,
+            subtitleDe,
             image,
             gallery
           }`,
           { id }
         );
-        // console.log("Query result:", result);
         setArticle(result);
       } catch (error) {
         console.error("Error fetching article:", error);
@@ -50,6 +76,35 @@ export default function BlogArticle() {
   }, []);
 
   if (!article) return <div>Loading...</div>;
+
+  const localizedName = getLocalizedField(article.name, selectedLanguage, {
+    fr: article.nameFr,
+    de: article.nameDe,
+  });
+  const localizedCategory = getLocalizedField(
+    article.category,
+    selectedLanguage,
+    {
+      fr: article.categoryFr,
+      de: article.categoryDe,
+    }
+  );
+  const localizedSubtitle = getLocalizedField(
+    article.subtitle,
+    selectedLanguage,
+    {
+      fr: article.subtitleFr,
+      de: article.subtitleDe,
+    }
+  );
+  const localizedDetails = getLocalizedField(
+    article.details,
+    selectedLanguage,
+    {
+      fr: article.detailsFr,
+      de: article.detailsDe,
+    }
+  );
 
   return (
     <>
@@ -78,10 +133,10 @@ export default function BlogArticle() {
             </Link>
           </div>
           <h1 className="mb-4 text-4xl font-bold text-gray-800">
-            {article.name}
+            {localizedName}
           </h1>
           <div className="flex items-center justify-between">
-            <span className="text-xl text-gray-600">{article.category}</span>
+            <span className="text-xl text-gray-600">{localizedCategory}</span>
             <span className="text-lg font-semibold text-gray-600">
               {article.year}
             </span>
@@ -102,10 +157,10 @@ export default function BlogArticle() {
         )}
 
         <div className="text-gray-600">
-          <PortableText value={article.subtitle} />
+          <PortableText value={localizedSubtitle} />
         </div>
 
-        <PortableText value={article.details} />
+        <PortableText value={localizedDetails} />
 
         {article.gallery && (
           <ArticleGallery

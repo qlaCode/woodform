@@ -1,77 +1,35 @@
 import React from "react";
+import { useLanguage } from "./LanguageContext";
+import { translations } from "./translations";
+
+const institutionUrls = {
+  "L'Etablisienne": "https://www.letablisienne.com/en/",
+  "Rowden Atelier (David Savage)": "https://rowdenatelier.com/",
+  "Robinson Studio (Marc Fish)": "https://www.marcfish.co.uk/",
+  "Capellagården (with Mats Aldén)": "https://www.capellagarden.se/en/",
+  "Hjerleid Skole": "https://www.hjerleid.no/",
+  "Atelier Lison De Caunes": "https://www.lisondecaunes.com/en/workshops/",
+  "Centre Municipal Buchegg": "https://gz-zh.ch/gz-buchegg/",
+  "Tom Schelker": "https://ch.linkedin.com/in/thomas-schelker-72565212a",
+};
 
 const WoodworkingEducation = () => {
-  const courses = [
-    {
-      year: "2015",
-      duration: "1 week",
-      course: "Guided Independent Project",
-      institution: "L'Etablisienne",
-      institutionUrl: "https://www.letablisienne.com/en/",
-      location: "Paris, France",
-    },
-    {
-      year: "2015",
-      duration: "1 week",
-      course: "Introduction to Woodworking",
-      institution: "Rowden Atelier (David Savage)",
-      institutionUrl: "https://rowdenatelier.com/",
-      location: "Devon, UK",
-    },
-    {
-      year: "2016",
-      duration: "1 week",
-      course: "Traditional Woorworking + Tray Fabrication",
-      institution: "Robinson Studio (Marc Fish)",
-      institutionUrl: "https://www.marcfish.co.uk/",
-      location: "East Sussex, UK",
-    },
-    {
-      year: "2016",
-      duration: "2 weeks",
-      course: "Personal Furniture Project",
-      institution: "Capellagården (with Mats Aldén)",
-      institutionUrl: "https://www.capellagarden.se/en/",
-      location: "Wickleby, Sweden",
-    },
-    {
-      year: "2016",
-      duration: "2 days",
-      course: "Acanthus Sculpture",
-      institution: "Hjerleid Skole",
-      institutionUrl: "https://www.hjerleid.no/",
-      location: "Dovre, Norway",
-    },
-    {
-      year: "2017",
-      duration: "2 days",
-      course: "Straw Marquetry",
-      institution: "Atelier Lison De Caunes",
-      institutionUrl: "https://www.lisondecaunes.com/en/workshops/",
-      location: "Paris, France",
-    },
-    {
-      year: "2022",
-      duration: "2 days",
-      course: "Stationary Machines Usage/Safety",
-      institution: "Centre Municipal Buchegg",
-      institutionUrl: "https://gz-zh.ch/gz-buchegg/",
-      location: "Zürich, Switzerland",
-    },
-    {
-      year: "2022-2023",
-      duration: "2 x 1 day",
-      course: "Shaper Origin Projects",
-      institution: "Tom Schelker",
-      institutionUrl: "https://ch.linkedin.com/in/thomas-schelker-72565212a",
-      location: "Lenzburg, Switzerland",
-    },
-  ];
+  const { selectedLanguage } = useLanguage();
+  const t = translations.education;
+  const courses = t.courses[selectedLanguage];
+
+  const getInstitutionUrl = (institutionName: string) => {
+    // Remove language-specific parts of the institution name to match with URLs
+    const baseInstitutionName = Object.keys(institutionUrls).find((key) =>
+      institutionName.startsWith(key.split(" (")[0])
+    );
+    return baseInstitutionName ? institutionUrls[baseInstitutionName] : "#";
+  };
 
   return (
     <div className="w-full p-6 bg-white rounded-lg shadow-lg">
       <h2 className="text-xl font-bold mb-6 text-left">
-        Woodworking Education
+        {t.title[selectedLanguage]}
       </h2>
 
       {/* Table view for medium screens and up */}
@@ -79,11 +37,21 @@ const WoodworkingEducation = () => {
         <table className="w-full">
           <thead>
             <tr className="bg-gray-100">
-              <th className="p-3 text-center font-semibold">Year</th>
-              <th className="p-3 text-center font-semibold">Duration</th>
-              <th className="p-3 text-center font-semibold">Course</th>
-              <th className="p-3 text-center font-semibold">Institution</th>
-              <th className="p-3 text-center font-semibold">Location</th>
+              <th className="p-3 text-center font-semibold">
+                {t.tableHeaders.year[selectedLanguage]}
+              </th>
+              <th className="p-3 text-center font-semibold">
+                {t.tableHeaders.duration[selectedLanguage]}
+              </th>
+              <th className="p-3 text-center font-semibold">
+                {t.tableHeaders.course[selectedLanguage]}
+              </th>
+              <th className="p-3 text-center font-semibold">
+                {t.tableHeaders.institution[selectedLanguage]}
+              </th>
+              <th className="p-3 text-center font-semibold">
+                {t.tableHeaders.location[selectedLanguage]}
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -97,7 +65,7 @@ const WoodworkingEducation = () => {
                 <td className="p-3">{course.course}</td>
                 <td className="p-3">
                   <a
-                    href={course.institutionUrl}
+                    href={getInstitutionUrl(course.institution)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-[#10A588] hover:text-blue-800 hover:underline underline"
@@ -129,7 +97,7 @@ const WoodworkingEducation = () => {
             <div className="text-sm space-y-1 text-left">
               <div>
                 <a
-                  href={course.institutionUrl}
+                  href={getInstitutionUrl(course.institution)}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-[#10A588] hover:text-blue-800 hover:underline underline"

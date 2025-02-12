@@ -1,5 +1,7 @@
 import type React from "react";
 import { useState, type FormEvent } from "react";
+import { useLanguage } from "./LanguageContext";
+import { translations } from "./translations";
 
 // cmd contact forn :
 // npx vercel dev
@@ -13,6 +15,8 @@ interface FormData {
 }
 
 const ContactForm: React.FC = () => {
+  const { selectedLanguage } = useLanguage();
+  const t = translations.contact;
   const [formData, setFormData] = useState<FormData>({
     subject: "",
     name: "",
@@ -126,10 +130,21 @@ const ContactForm: React.FC = () => {
     );
   }
 
+  if (isSubmitted) {
+    return (
+      <div className="text-center p-6">
+        <h3 className="text-[#10A588] text-xl mb-4">
+          {t.success[selectedLanguage]}
+        </h3>
+        <p className="text-gray-600">{t.willReply[selectedLanguage]}</p>
+      </div>
+    );
+  }
+
   return (
     <div className="max-w-2xl mx-auto px-4">
       <h2 className="text-[#10A588] text-3xl font-mono font-medium mb-6">
-        Contact Me
+        {t.title[selectedLanguage]}
       </h2>
       <form onSubmit={handleSubmit} className="space-y-6">
         <div>
@@ -137,7 +152,7 @@ const ContactForm: React.FC = () => {
             htmlFor="name"
             className="block text-slate-800 text-sm font-bold mb-2"
           >
-            Your Name
+            {t.name[selectedLanguage]}
           </label>
           <input
             className={inputClass(errors.name)}
@@ -146,7 +161,7 @@ const ContactForm: React.FC = () => {
             name="name"
             value={formData.name}
             onChange={handleChange}
-            placeholder="Your name"
+            placeholder={t.name[selectedLanguage]}
           />
           {errors.name && (
             <p className="text-red-500 text-sm mt-1">{errors.name}</p>
@@ -158,7 +173,7 @@ const ContactForm: React.FC = () => {
             htmlFor="email"
             className="block text-slate-800 text-sm font-bold mb-2"
           >
-            Email
+            {t.email[selectedLanguage]}
           </label>
           <input
             className={inputClass(errors.email)}
@@ -167,7 +182,7 @@ const ContactForm: React.FC = () => {
             name="email"
             value={formData.email}
             onChange={handleChange}
-            placeholder="Your email"
+            placeholder={t.email[selectedLanguage]}
           />
           {errors.email && (
             <p className="text-red-500 text-sm mt-1">{errors.email}</p>
@@ -179,7 +194,7 @@ const ContactForm: React.FC = () => {
             htmlFor="subject"
             className="block text-slate-800 text-sm font-bold mb-2"
           >
-            Subject
+            {t.subject[selectedLanguage]}
           </label>
           <input
             className={inputClass(errors.subject)}
@@ -188,7 +203,7 @@ const ContactForm: React.FC = () => {
             name="subject"
             value={formData.subject}
             onChange={handleChange}
-            placeholder="Subject"
+            placeholder={t.subject[selectedLanguage]}
           />
           {errors.subject && (
             <p className="text-red-500 text-sm mt-1">{errors.subject}</p>
@@ -200,7 +215,7 @@ const ContactForm: React.FC = () => {
             htmlFor="message"
             className="block text-slate-800 text-sm font-bold mb-2"
           >
-            Message
+            {t.message[selectedLanguage]}
           </label>
           <textarea
             className={inputClass(errors.message)}
@@ -209,7 +224,7 @@ const ContactForm: React.FC = () => {
             value={formData.message}
             onChange={handleChange}
             rows={4}
-            placeholder="Your message"
+            placeholder={t.message[selectedLanguage]}
           />
           {errors.message && (
             <p className="text-red-500 text-sm mt-1">{errors.message}</p>
@@ -232,7 +247,7 @@ const ContactForm: React.FC = () => {
           disabled={isLoading}
           className="w-full bg-[#10A588] text-white py-2 px-4 rounded hover:bg-[#0D8C73] transition-colors disabled:bg-gray-400"
         >
-          {isLoading ? "Sending..." : "Send Message"}
+          {isLoading ? t.sending[selectedLanguage] : t.send[selectedLanguage]}
         </button>
       </form>
     </div>
