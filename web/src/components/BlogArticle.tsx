@@ -6,6 +6,7 @@ import { Article } from "../../../common/types";
 import ArticleGallery from "./ArticleGallery";
 import { Language, useLanguage } from "./LanguageContext";
 import Lightbox from "./Lightbox";
+import { translations } from "./translations";
 
 function getLocalizedField<T>(
   englishVersion: T,
@@ -129,7 +130,7 @@ export default function BlogArticle() {
                   d="M10 19l-7-7m0 0l7-7m-7 7h18"
                 />
               </svg>
-              Back To Gallery
+              {translations.nav.backToGallery[selectedLanguage]}
             </Link>
           </div>
           <h1 className="mb-4 text-4xl font-bold text-gray-800">
