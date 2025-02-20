@@ -1,4 +1,6 @@
-import { Route, Routes } from "react-router-dom";
+import { useEffect } from "react";
+import { Route, Routes, useLocation } from "react-router-dom";
+import { initGA, trackPageView } from "./analytics";
 import "./App.css";
 import About from "./components/About";
 import BlogArticle from "./components/BlogArticle";
@@ -11,6 +13,16 @@ import { LanguageProvider } from "./components/LanguageContext";
 import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
+  const location = useLocation();
+
+  useEffect(() => {
+    initGA(); // Initialize Google Analytics
+  }, []);
+
+  useEffect(() => {
+    trackPageView(location.pathname); // Track page views on route change
+  }, [location]);
+
   return (
     <LanguageProvider>
       <GalleryProvider>
