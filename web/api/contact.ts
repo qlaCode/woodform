@@ -16,7 +16,7 @@ export default async function handler(req, res) {
   try {
     const data = await resend.emails.send({
       from: "Quentin - Woodform <no-reply@resend.dev>",
-      to: "lamare@protonmail.ch",
+      to: "lamare.quentin@icloud.com",
       subject,
       text: `
         You have a new message from ${name} (${email}):
