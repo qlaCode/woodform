@@ -1,6 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { sanityClient } from "../../../common/sanityclient";
 import { useLanguage } from "./LanguageContext";
 import { translations } from "./translations";
+
+// Static data as backup (not used, kept for reference)
+// const staticCoursesData = translations.education.courses;
 
 const institutionUrls = {
   "L'Etablisienne": "https://www.letablisienne.com/en/",
@@ -13,10 +17,74 @@ const institutionUrls = {
   "Tom Schelker": "https://ch.linkedin.com/in/thomas-schelker-72565212a",
 };
 
+interface Experience {
+  _id: string;
+  year: string;
+  duration: {
+    en: string;
+    fr: string;
+    de: string;
+  };
+  course: {
+    en: string;
+    fr: string;
+    de: string;
+  };
+  institution: {
+    text: string;
+    url?: string;
+  };
+  location: string;
+}
+
 const WoodworkingEducation = () => {
   const { selectedLanguage } = useLanguage();
   const t = translations.education;
-  const courses = t.courses[selectedLanguage];
+  const [experiences, setExperiences] = useState<Experience[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  // Fetch experiences from Sanity
+  async function fetchExperiences() {
+    try {
+      const result = await sanityClient.fetch<Experience[]>(
+        `*[_type == "experience"] {
+          _id,
+          year,
+          duration,
+          course,
+          institution,
+          location
+        } | order(year desc)`
+      );
+      setExperiences(result);
+    } catch (error) {
+      console.error("Failed to fetch experiences:", error);
+      setExperiences([]);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    fetchExperiences();
+  }, []);
+
+  // Convert experiences to the format expected by the UI
+  const courses = experiences.map(exp => ({
+    year: exp.year,
+    duration: exp.duration[selectedLanguage] || exp.duration.en,
+    course: exp.course[selectedLanguage] || exp.course.en,
+    institution: exp.institution.text,
+    location: exp.location,
+  }));
+
+  if (loading) {
+    return (
+      <div className="w-full p-6 bg-white rounded-lg shadow-lg">
+        <div className="text-center">Loading courses...</div>
+      </div>
+    );
+  }
 
   const getInstitutionUrl = (institutionName: string) => {
     // Remove language-specific parts of the institution name to match with URLs
@@ -33,23 +101,23 @@ const WoodworkingEducation = () => {
       </h2>
 
       {/* Table view for medium screens and up */}
-      <div className="hidden md:block overflow-x-auto">
-        <table className="w-full">
+      <div className="hidden md:block">
+        <table className="w-full table-fixed">
           <thead>
             <tr className="bg-gray-100">
-              <th className="p-3 text-center font-semibold">
+              <th className="p-3 text-center font-semibold w-16">
                 {t.tableHeaders.year[selectedLanguage]}
               </th>
-              <th className="p-3 text-center font-semibold">
+              <th className="p-3 text-center font-semibold w-20">
                 {t.tableHeaders.duration[selectedLanguage]}
               </th>
-              <th className="p-3 text-center font-semibold">
+              <th className="p-3 text-center font-semibold w-1/3">
                 {t.tableHeaders.course[selectedLanguage]}
               </th>
-              <th className="p-3 text-center font-semibold">
+              <th className="p-3 text-center font-semibold w-1/3">
                 {t.tableHeaders.institution[selectedLanguage]}
               </th>
-              <th className="p-3 text-center font-semibold">
+              <th className="p-3 text-center font-semibold w-24">
                 {t.tableHeaders.location[selectedLanguage]}
               </th>
             </tr>

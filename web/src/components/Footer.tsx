@@ -1,6 +1,7 @@
 import type React from "react";
 import { useLanguage } from "./LanguageContext";
 import { translations } from "./translations";
+import { SoMe } from "./SoMe";
 
 export const Footer: React.FC = () => {
   const { selectedLanguage } = useLanguage();
@@ -11,6 +12,9 @@ export const Footer: React.FC = () => {
         <div className="mt-8 text-center text-sm">
           <p className="text-[#10A588]">Woodform by Quentin Lamare </p>
           {translations.footer.builtWith[selectedLanguage]}{" "}
+          
+          <SoMe className="mt-4" />
+          
           <p className="mt-2">&copy; {new Date().getFullYear()}</p>
         </div>
       </div>
