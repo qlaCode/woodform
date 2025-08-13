@@ -17,6 +17,11 @@ export const translations = {
     },
   },
   nav: {
+    home: {
+      en: "Home",
+      fr: "Accueil",
+      de: "Startseite",
+    },
     gallery: {
       en: "Gallery",
       fr: "Galerie",

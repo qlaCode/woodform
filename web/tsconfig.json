@@ -1,13 +1,16 @@
 {
   "compilerOptions": {
     "target": "ESNext",
-    "module": "es2015",
-    "moduleResolution": "node",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
     "allowJs": true,
     "resolveJsonModule": true,
-    "types": ["@sanity/image-url"],
+    "types": ["@sanity/image-url", "node"],
     "noEmit": true,
     "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "skipLibCheck": true,
     "jsx": "react-jsx"
   },
   "include": ["src", "api"],

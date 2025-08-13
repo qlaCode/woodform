@@ -53,6 +53,9 @@ export default function Header() {
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-6">
             <Link to="/" className={navLinkClass("/")}>
+              {translations.nav.home[selectedLanguage]}
+            </Link>
+            <Link to="/gallery" className={navLinkClass("/gallery")}>
               {translations.nav.gallery[selectedLanguage]}
             </Link>
             <Link to="/about" className={navLinkClass("/about")}>
@@ -124,6 +127,13 @@ export default function Header() {
             <Link
               to="/"
               className={`block py-2 ${navLinkClass("/")}`}
+              onClick={toggleMenu}
+            >
+              {translations.nav.home[selectedLanguage]}
+            </Link>
+            <Link
+              to="/gallery"
+              className={`block py-2 ${navLinkClass("/gallery")}`}
               onClick={toggleMenu}
             >
               {translations.nav.gallery[selectedLanguage]}
