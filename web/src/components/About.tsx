@@ -77,7 +77,7 @@ export default function About() {
         </motion.h2>
 
         {/* Main layout: Photo with overlay left, Content right */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Left side: Photo and contact info */}
           <div className="space-y-6">
             <motion.div
@@ -129,7 +129,7 @@ export default function About() {
           </div>
 
           {/* Right side: Story text and experiences */}
-          <div className="space-y-6">
+          <div className="space-y-6 lg:col-span-2">
 
             {/* Story/About content */}
             <motion.div 
