@@ -11,6 +11,11 @@ export const categoryTranslations = {
     fr: "Objet",
     de: "Objekt"
   },
+  Storage: {
+    en: "Storage",
+    fr: "Rangement",
+    de: "Aufbewahrung"
+  },
   Workshop: {
     en: "Workshop",
     fr: "Atelier",

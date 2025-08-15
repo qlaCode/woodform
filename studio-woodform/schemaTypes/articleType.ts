@@ -27,6 +27,7 @@ export const articleType = defineType({
         list: [
           { title: "Furniture", value: "Furniture" },
           { title: "Object", value: "Object" },
+          { title: "Storage", value: "Storage" },
           { title: "Workshop", value: "Workshop" }
         ],
         layout: "radio"
@@ -55,6 +56,13 @@ export const articleType = defineType({
       type: "number",
     }),
     defineField({
+      name: "featured",
+      title: "Featured Project",
+      type: "boolean",
+      description: "Mark this project as featured",
+      initialValue: false,
+    }),
+    defineField({
       name: "image",
       type: "image",
       options: {
@@ -71,6 +79,7 @@ export const articleType = defineType({
     select: {
       title: "name",
       subtitle: "category",
+      media: "image",
     },
   },
 });

@@ -113,7 +113,7 @@ export default function BlogArticle() {
         <div className="mb-8">
           <div className="mb-4 flex items-center">
             <Link
-              to="/"
+              to="/gallery"
               className="mb-4 flex items-center text-gray-600 hover:text-gray-800"
             >
               <svg

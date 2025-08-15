@@ -42,6 +42,7 @@ export type Article = {
   detailsFr?: PortableTextBlock[];
   detailsDe?: PortableTextBlock[];
   year: number;
+  featured?: boolean;
   image?: SanityImage;
   gallery?: Gallery;
 };

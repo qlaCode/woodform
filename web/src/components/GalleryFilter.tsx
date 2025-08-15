@@ -1,21 +1,17 @@
-import { FilterOption, useGallery } from "./GalleryContext";
 import { useLanguage } from "./LanguageContext";
 import { translations } from "./translations";
 
-export const GalleryFilter: React.FC = () => {
-  const { selectedFilter, setSelectedFilter } = useGallery();
+interface GalleryNavigationProps {
+  onScrollToSection: (section: string) => void;
+}
+
+export const GalleryNavigation: React.FC<GalleryNavigationProps> = ({ onScrollToSection }) => {
   const { selectedLanguage } = useLanguage();
 
-  const filterOptions: FilterOption[] = [
-    "All",
-    "Furniture",
-    "Object",
-    "Workshop",
-  ];
+  const sections = ["Furniture", "Object", "Storage", "Workshop"];
 
-  const getFilterTranslation = (filter: FilterOption) => {
-    const key =
-      filter.toLowerCase() as keyof typeof translations.gallery.filters;
+  const getSectionTranslation = (section: string) => {
+    const key = section.toLowerCase() as keyof typeof translations.gallery.filters;
     return translations.gallery.filters[key][selectedLanguage];
   };
 
@@ -25,17 +21,13 @@ export const GalleryFilter: React.FC = () => {
         {translations.gallery.projects[selectedLanguage]}
       </h3>
       <div className="flex flex-wrap gap-3">
-        {filterOptions.map((option) => (
+        {sections.map((section) => (
           <button
-            key={option}
-            onClick={() => setSelectedFilter(option)}
-            className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
-              selectedFilter === option
-                ? "bg-[#10A588] text-white shadow-md"
-                : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-            }`}
+            key={section}
+            onClick={() => onScrollToSection(section)}
+            className="px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 bg-gray-200 text-gray-700 hover:bg-[#10A588] hover:text-white"
           >
-            {getFilterTranslation(option)}
+            {getSectionTranslation(section)}
           </button>
         ))}
       </div>

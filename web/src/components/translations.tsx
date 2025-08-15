@@ -45,9 +45,9 @@ export const translations = {
   },
   gallery: {
     projects: {
-      en: "Projects:",
-      fr: "Projets:",
-      de: "Projekte:",
+      en: "Category",
+      fr: "Catégorie",
+      de: "Kategorie",
     },
     filters: {
       all: {
@@ -64,6 +64,11 @@ export const translations = {
         en: "Object",
         fr: "Objet",
         de: "Objekt",
+      },
+      storage: {
+        en: "Storage",
+        fr: "Rangement",
+        de: "Aufbewahrung",
       },
       workshop: {
         en: "Workshop",
@@ -163,6 +168,25 @@ export const translations = {
         fr: "Lieu",
         de: "Ort",
       },
+    },
+  },
+  home: {
+    buttons: {
+      viewWork: {
+        en: "View my work",
+        fr: "Voir mes travaux",
+        de: "Meine Arbeiten ansehen",
+      },
+      contact: {
+        en: "Contact me",
+        fr: "Me contacter",
+        de: "Kontakt aufnehmen",
+      },
+    },
+    featuredProjects: {
+      en: "Featured Projects",
+      fr: "Sélection de projets",
+      de: "Hervorgehobene Projekte",
     },
   },
 };

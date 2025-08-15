@@ -27,6 +27,9 @@ function getLocalizedField<T>(
 
 interface BlogCardProps extends Article {
   selectedLanguage: Language;
+  hideMetadata?: boolean;
+  hideCategory?: boolean;
+  noShadow?: boolean;
 }
 
 export default function BlogCard({
@@ -41,6 +44,9 @@ export default function BlogCard({
   image,
   _id,
   selectedLanguage,
+  hideMetadata = false,
+  hideCategory = false,
+  noShadow = false,
 }: BlogCardProps) {
   const getImagePosition = () => {
     if (!image?.hotspot) return "center";
@@ -82,10 +88,12 @@ export default function BlogCard({
     <Link to={`/article/${_id}`} className="group block">
       <div className="group block">
         <div
-          className="overflow-hidden rounded-lg shadow-lg transition-shadow duration-300 hover:shadow-xl"
+          className={`overflow-hidden rounded-lg transition-shadow duration-300 ${
+            noShadow ? "" : "shadow-lg hover:shadow-xl"
+          }`}
           key={_id}
         >
-          <div className="relative h-48 w-full">
+          <div className="relative h-64 w-full">
             {image && (
               <img
                 src={getThumbnailUrl(image)}
@@ -96,18 +104,30 @@ export default function BlogCard({
             )}
           </div>
           <div className="p-4">
-            <div className="mb-2 flex items-center justify-between">
-              <h2 className="text-xl font-bold text-gray-800">
-                {localizedName}
-              </h2>
-              <span className="text-sm font-semibold text-gray-600">
-                {year}
-              </span>
-            </div>
-            <p className="text-gray-600">{localizedCategory}</p>
-            <div className="text-gray-600">
-              <PortableText value={localizedSubtitle} />
-            </div>
+            {hideMetadata ? (
+              <div className="mb-2">
+                <h2 className="text-xl font-bold text-gray-800">
+                  {localizedName}
+                </h2>
+              </div>
+            ) : (
+              <div className="mb-2 flex items-center justify-between">
+                <h2 className="text-xl font-bold text-gray-800">
+                  {localizedName}
+                </h2>
+                <span className="text-sm font-semibold text-gray-600">
+                  {year}
+                </span>
+              </div>
+            )}
+            {!hideMetadata && (
+              <>
+                {!hideCategory && <p className="text-gray-600">{localizedCategory}</p>}
+                <div className="text-gray-600">
+                  <PortableText value={localizedSubtitle} />
+                </div>
+              </>
+            )}
           </div>
         </div>
       </div>
