@@ -11,7 +11,12 @@ export default async function handler(req, res) {
   }
 
   const resend = new Resend(process.env.RESEND_API_KEY);
-  const { subject, name, email, message } = req.body; // Use req.body instead of await request.json()
+  const { subject, name, email, message, honeypot } = req.body; // Use req.body instead of await request.json()
+
+  // Check honeypot field - if filled, it's likely a bot
+  if (honeypot && honeypot.trim() !== "") {
+    return res.status(400).json({ error: "Invalid submission" });
+  }
 
   try {
     const data = await resend.emails.send({

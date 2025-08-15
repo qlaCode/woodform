@@ -83,6 +83,7 @@ const ContactForm: React.FC = () => {
             name: formData.name,
             email: formData.email,
             message: formData.message,
+            honeypot: formData.honeypot,
           }),
         });
 
