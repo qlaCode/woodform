@@ -86,7 +86,7 @@ export default function Home() {
               transition={{ delay: 0.3, duration: 0.8, ease: "easeOut" }}
               className="flex justify-center mb-8"
             >
-              <h1 className="text-2xl sm:text-3xl md:text-6xl font-mono text-white bg-black/30 backdrop-blur-sm px-3 sm:px-4 md:px-6 py-3 rounded-lg whitespace-nowrap overflow-hidden text-ellipsis max-w-full">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl font-mono text-white bg-black/30 backdrop-blur-sm px-6 py-3 rounded-lg">
                 {welcomeContent.title[selectedLanguage] ||
                   welcomeContent.title.en}
               </h1>
@@ -119,7 +119,7 @@ export default function Home() {
               transition={{ delay: 0.3, duration: 0.8, ease: "easeOut" }}
               className="flex justify-center mb-8"
             >
-              <h1 className="text-2xl sm:text-3xl md:text-6xl font-mono text-white bg-black/30 backdrop-blur-sm px-3 sm:px-4 md:px-6 py-3 rounded-lg whitespace-nowrap overflow-hidden text-ellipsis max-w-full">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl font-mono text-white bg-black/30 backdrop-blur-sm px-6 py-3 rounded-lg">
                 Welcome
               </h1>
             </motion.div>
