@@ -6,6 +6,19 @@ export const experienceType = defineType({
   type: 'document',
   fields: [
     defineField({
+      name: 'type',
+      title: 'Type',
+      type: 'string',
+      options: {
+        list: [
+          {title: 'Course', value: 'course'},
+          {title: 'Education', value: 'education'}
+        ],
+        layout: 'radio'
+      },
+      validation: Rule => Rule.required()
+    }),
+    defineField({
       name: 'year',
       title: 'Year',
       type: 'string',

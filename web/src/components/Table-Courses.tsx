@@ -6,19 +6,10 @@ import { translations } from "./translations";
 // Static data as backup (not used, kept for reference)
 // const staticCoursesData = translations.education.courses;
 
-const institutionUrls = {
-  "L'Etablisienne": "https://www.letablisienne.com/en/",
-  "Rowden Atelier (David Savage)": "https://rowdenatelier.com/",
-  "Robinson Studio (Marc Fish)": "https://www.marcfish.co.uk/",
-  "Capellagården (with Mats Aldén)": "https://www.capellagarden.se/en/",
-  "Hjerleid Skole": "https://www.hjerleid.no/",
-  "Atelier Lison De Caunes": "https://www.lisondecaunes.com/en/workshops/",
-  "Centre Municipal Buchegg": "https://gz-zh.ch/gz-buchegg/",
-  "Tom Schelker": "https://ch.linkedin.com/in/thomas-schelker-72565212a",
-};
 
 interface Experience {
   _id: string;
+  type: 'course' | 'education';
   year: string;
   duration: {
     en: string;
@@ -37,9 +28,14 @@ interface Experience {
   location: string;
 }
 
-const WoodworkingEducation = () => {
+interface WoodworkingEducationProps {
+  type: 'course' | 'education';
+  translationKey: 'education' | 'educationTable';
+}
+
+const WoodworkingEducation: React.FC<WoodworkingEducationProps> = ({ type, translationKey }) => {
   const { selectedLanguage } = useLanguage();
-  const t = translations.education;
+  const t = translations[translationKey];
   const [experiences, setExperiences] = useState<Experience[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -47,8 +43,9 @@ const WoodworkingEducation = () => {
   async function fetchExperiences() {
     try {
       const result = await sanityClient.fetch<Experience[]>(
-        `*[_type == "experience"] {
+        `*[_type == "experience" && type == "${type}"] {
           _id,
+          type,
           year,
           duration,
           course,

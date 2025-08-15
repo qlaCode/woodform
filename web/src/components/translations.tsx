@@ -136,11 +136,45 @@ export const translations = {
       de: "Ich werde mich bald bei Ihnen melden.",
     },
   },
+  educationTable: {
+    title: {
+      en: "Education",
+      fr: "Formation",
+      de: "Ausbildung",
+    },
+    tableHeaders: {
+      year: {
+        en: "Year",
+        fr: "Année",
+        de: "Jahr",
+      },
+      duration: {
+        en: "Duration",
+        fr: "Durée",
+        de: "Dauer",
+      },
+      course: {
+        en: "Program",
+        fr: "Programme",
+        de: "Programm",
+      },
+      institution: {
+        en: "Institution",
+        fr: "Institution",
+        de: "Institution",
+      },
+      location: {
+        en: "Location",
+        fr: "Lieu",
+        de: "Ort",
+      },
+    },
+  },
   education: {
     title: {
-      en: "Woodworking Education",
-      fr: "Formation en Ébénisterie",
-      de: "Ausbildung in Holzbearbeitung",
+      en: "Courses/Workshops",
+      fr: "Cours/Workshops",
+      de: "Kurse/Workshops",
     },
     tableHeaders: {
       year: {
