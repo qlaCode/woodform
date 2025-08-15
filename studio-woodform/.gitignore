@@ -33,3 +33,4 @@
 .env.production
 /public/studio
 /public/static
+.vercel

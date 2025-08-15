@@ -46,11 +46,5 @@ export const galleryType = defineType({
         sortable: true,
       },
     }),
-    defineField({
-      name: "zoom",
-      type: "boolean",
-      title: "Zoom enabled",
-      description: "Should we enable zooming of images?",
-    }),
   ],
 });

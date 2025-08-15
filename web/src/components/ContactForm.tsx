@@ -1,5 +1,6 @@
 import type React from "react";
 import { useState, type FormEvent } from "react";
+import { motion } from "framer-motion";
 import { useLanguage } from "./LanguageContext";
 import { translations } from "./translations";
 
@@ -142,12 +143,32 @@ const ContactForm: React.FC = () => {
   }
 
   return (
-    <div className="max-w-2xl mx-auto px-4">
-      <h2 className="text-[#10A588] text-3xl font-mono font-medium mb-6">
+    <motion.div 
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4, ease: "easeOut" }}
+      className="max-w-2xl mx-auto px-4"
+    >
+      <motion.h2 
+        initial={{ y: -30, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ delay: 0.1, duration: 0.4, ease: "easeOut" }}
+        className="text-[#10A588] text-3xl font-mono font-medium mb-6"
+      >
         {t.title[selectedLanguage]}
-      </h2>
-      <form onSubmit={handleSubmit} className="space-y-6">
-        <div>
+      </motion.h2>
+      <motion.form 
+        initial={{ y: 20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ delay: 0.2, duration: 0.4, ease: "easeOut" }}
+        onSubmit={handleSubmit} 
+        className="space-y-6"
+      >
+        <motion.div
+          initial={{ x: -20, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ delay: 0.3, duration: 0.4, ease: "easeOut" }}
+        >
           <label
             htmlFor="name"
             className="block text-slate-800 text-sm font-bold mb-2"
@@ -166,9 +187,13 @@ const ContactForm: React.FC = () => {
           {errors.name && (
             <p className="text-red-500 text-sm mt-1">{errors.name}</p>
           )}
-        </div>
+        </motion.div>
 
-        <div>
+        <motion.div
+          initial={{ x: -20, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ delay: 0.4, duration: 0.4, ease: "easeOut" }}
+        >
           <label
             htmlFor="email"
             className="block text-slate-800 text-sm font-bold mb-2"
@@ -187,9 +212,13 @@ const ContactForm: React.FC = () => {
           {errors.email && (
             <p className="text-red-500 text-sm mt-1">{errors.email}</p>
           )}
-        </div>
+        </motion.div>
 
-        <div>
+        <motion.div
+          initial={{ x: -20, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ delay: 0.5, duration: 0.4, ease: "easeOut" }}
+        >
           <label
             htmlFor="subject"
             className="block text-slate-800 text-sm font-bold mb-2"
@@ -208,9 +237,13 @@ const ContactForm: React.FC = () => {
           {errors.subject && (
             <p className="text-red-500 text-sm mt-1">{errors.subject}</p>
           )}
-        </div>
+        </motion.div>
 
-        <div>
+        <motion.div
+          initial={{ x: -20, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ delay: 0.6, duration: 0.4, ease: "easeOut" }}
+        >
           <label
             htmlFor="message"
             className="block text-slate-800 text-sm font-bold mb-2"
@@ -229,7 +262,7 @@ const ContactForm: React.FC = () => {
           {errors.message && (
             <p className="text-red-500 text-sm mt-1">{errors.message}</p>
           )}
-        </div>
+        </motion.div>
 
         {/* Honeypot field */}
         <input
@@ -242,15 +275,18 @@ const ContactForm: React.FC = () => {
           autoComplete="off"
         />
 
-        <button
+        <motion.button
+          initial={{ y: 20, opacity: 0, scale: 0.95 }}
+          animate={{ y: 0, opacity: 1, scale: 1 }}
+          transition={{ delay: 0.7, duration: 0.4, ease: "easeOut" }}
           type="submit"
           disabled={isLoading}
           className="w-full bg-[#10A588] text-white py-2 px-4 rounded hover:bg-[#0D8C73] transition-colors disabled:bg-gray-400"
         >
           {isLoading ? t.sending[selectedLanguage] : t.send[selectedLanguage]}
-        </button>
-      </form>
-    </div>
+        </motion.button>
+      </motion.form>
+    </motion.div>
   );
 };
 

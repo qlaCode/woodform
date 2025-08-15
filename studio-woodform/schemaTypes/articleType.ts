@@ -21,34 +21,17 @@ export const articleType = defineType({
     }),
     defineField({
       name: "category",
+      title: "Category",
       type: "string",
-    }),
-    defineField({
-      name: "categoryFr",
-      type: "string",
-      title: "Category (French)",
-    }),
-    defineField({
-      name: "categoryDe",
-      type: "string",
-      title: "Category (German)",
-    }),
-    defineField({
-      name: "subtitle",
-      type: "array",
-      of: [{ type: "block" }],
-    }),
-    defineField({
-      name: "subtitleFr",
-      title: "Subtitle (French)",
-      type: "array",
-      of: [{ type: "block" }],
-    }),
-    defineField({
-      name: "subtitleDe",
-      title: "Subtitle (German)",
-      type: "array",
-      of: [{ type: "block" }],
+      options: {
+        list: [
+          { title: "Furniture", value: "Furniture" },
+          { title: "Object", value: "Object" },
+          { title: "Workshop", value: "Workshop" }
+        ],
+        layout: "radio"
+      },
+      validation: Rule => Rule.required()
     }),
     defineField({
       name: "details",

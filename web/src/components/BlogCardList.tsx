@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import { sanityClient } from "../../../common/sanityclient";
 import { Article } from "../../../common/types";
 import BlogCard from "./BlogCard";
@@ -14,13 +15,12 @@ export default function BlogCardList() {
 
   async function fetchContent() {
     try {
-      const query =
-        selectedFilter === "All"
-          ? `*[_type == "article"]`
-          : `*[_type == "article" && category == $category]`; // Using base category (English) for filtering
+      let query = `*[_type == "article"]`;
+      let params = {};
 
-      const params =
-        selectedFilter === "All" ? {} : { category: selectedFilter };
+      if (selectedFilter !== "All") {
+        query = `*[_type == "article" && category == "${selectedFilter}"]`;
+      }
 
       const result = await sanityClient.fetch<Article[]>(
         `${query} {
@@ -29,8 +29,6 @@ export default function BlogCardList() {
             nameFr,
             nameDe,
             category,
-            categoryFr,
-            categoryDe,
             year,
             details,
             detailsFr,
@@ -42,10 +40,10 @@ export default function BlogCardList() {
             subtitle,
             subtitleFr,
             subtitleDe
-          } | order(year desc)`,
-        params
+          } | order(year desc)`
       );
 
+      console.log(`Filter: ${selectedFilter}, Found: ${result.length} articles`);
       setContent(result);
     } catch (error) {
       console.log(error);
@@ -58,19 +56,45 @@ export default function BlogCardList() {
 
   return (
     <>
-      <h2 className="text-[#10A588] text-3xl font-mono font-medium mb-6">
+      <motion.h2 
+        initial={{ y: -30, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.4, ease: "easeOut" }}
+        className="text-[#10A588] text-3xl font-mono font-medium mb-6"
+      >
         {translations.titles.gallery[selectedLanguage]}
-      </h2>
-      <GalleryFilter />
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {content.map((article) => (
-          <BlogCard
-            {...article}
+      </motion.h2>
+      <motion.div
+        initial={{ y: -20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ delay: 0.1, duration: 0.4, ease: "easeOut" }}
+      >
+        <GalleryFilter />
+      </motion.div>
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.2, duration: 0.4, ease: "easeOut" }}
+        className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3"
+      >
+        {content.map((article, index) => (
+          <motion.div
             key={article._id}
-            selectedLanguage={selectedLanguage}
-          />
+            initial={{ y: 30, opacity: 0, scale: 0.9 }}
+            animate={{ y: 0, opacity: 1, scale: 1 }}
+            transition={{ 
+              delay: 0.3 + index * 0.05, 
+              duration: 0.4, 
+              ease: "easeOut" 
+            }}
+          >
+            <BlogCard
+              {...article}
+              selectedLanguage={selectedLanguage}
+            />
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
     </>
   );
 }

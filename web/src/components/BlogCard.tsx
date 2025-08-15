@@ -3,6 +3,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { sanityImageBuilder } from "../../../common/sanityclient";
 import { Article, Language, SanityImage } from "../../../common/types";
+import { getCategoryTranslation } from "../utils/categoryTranslations";
 
 function getLocalizedField<T>(
   englishVersion: T,
@@ -33,8 +34,6 @@ export default function BlogCard({
   nameFr,
   nameDe,
   category,
-  categoryFr,
-  categoryDe,
   year,
   subtitle,
   subtitleFr,
@@ -73,10 +72,7 @@ export default function BlogCard({
     fr: nameFr,
     de: nameDe,
   });
-  const localizedCategory = getLocalizedField(category, selectedLanguage, {
-    fr: categoryFr,
-    de: categoryDe,
-  });
+  const localizedCategory = getCategoryTranslation(category, selectedLanguage);
   const localizedSubtitle = getLocalizedField(subtitle, selectedLanguage, {
     fr: subtitleFr,
     de: subtitleDe,

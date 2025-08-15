@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 import { sanityClient } from "../../../common/sanityclient";
 import { useLanguage } from "./LanguageContext";
 
@@ -51,7 +52,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="relative flex flex-col items-center justify-start pt-32 min-h-screen w-full text-center">
+    <div className="relative flex flex-col items-center mt-24 w-full text-center">
       <video
         autoPlay
         muted
@@ -63,17 +64,40 @@ export default function Home() {
         <source src="/background.mp4" type="video/mp4" />
         Your browser does not support the video tag.
       </video>
-      <div className="relative z-0 p-12 max-w-4xl mx-auto">
+      <motion.div 
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1, ease: "easeOut" }}
+        className="relative z-0 p-12 max-w-4xl mx-auto"
+      >
         {loading ? (
-          <div className="text-center text-white">Loading...</div>
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="text-center text-white"
+          >
+            Loading...
+          </motion.div>
         ) : welcomeContent ? (
           <>
-            <h1 className="text-4xl md:text-6xl font-mono text-white mb-8 bg-black/30 backdrop-blur-sm px-6 py-3 rounded-lg inline-block">
-              {welcomeContent.title[selectedLanguage] ||
-                welcomeContent.title.en}
-            </h1>
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.8, ease: "easeOut" }}
+              className="flex justify-center mb-8"
+            >
+              <h1 className="text-4xl md:text-6xl font-mono text-white bg-black/30 backdrop-blur-sm px-6 py-3 rounded-lg whitespace-nowrap">
+                {welcomeContent.title[selectedLanguage] ||
+                  welcomeContent.title.en}
+              </h1>
+            </motion.div>
 
-            <div className="text-lg text-white mb-8 leading-relaxed bg-black/20 backdrop-blur-sm px-6 py-4 rounded-lg">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6, duration: 0.8, ease: "easeOut" }}
+              className="text-lg text-white mb-8 leading-relaxed bg-black/20 backdrop-blur-sm px-6 py-4 rounded-lg"
+            >
               {(
                 welcomeContent.description[selectedLanguage] ||
                 welcomeContent.description.en
@@ -85,20 +109,37 @@ export default function Home() {
                     {line}
                   </p>
                 ))}
-            </div>
+            </motion.div>
           </>
         ) : (
           <>
-            <h1 className="text-4xl md:text-6xl font-mono text-white mb-8 bg-black/30 backdrop-blur-sm px-6 py-3 rounded-lg inline-block">
-              Welcome
-            </h1>
-            <div className="text-lg text-white mb-8 leading-relaxed bg-black/20 backdrop-blur-sm px-6 py-4 rounded-lg">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.8, ease: "easeOut" }}
+              className="flex justify-center mb-8"
+            >
+              <h1 className="text-4xl md:text-6xl font-mono text-white bg-black/30 backdrop-blur-sm px-6 py-3 rounded-lg whitespace-nowrap">
+                Welcome
+              </h1>
+            </motion.div>
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6, duration: 0.8, ease: "easeOut" }}
+              className="text-lg text-white mb-8 leading-relaxed bg-black/20 backdrop-blur-sm px-6 py-4 rounded-lg"
+            >
               <p className="mb-0">No welcome content available</p>
-            </div>
+            </motion.div>
           </>
         )}
 
-        <div className="bg-black/20 backdrop-blur-sm px-6 py-4 rounded-lg inline-block">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.9, duration: 0.8, ease: "easeOut" }}
+          className="bg-black/20 backdrop-blur-sm px-6 py-4 rounded-lg inline-block"
+        >
           <div className="flex flex-col sm:flex-row gap-4">
             <Link
               to="/gallery"
@@ -113,8 +154,8 @@ export default function Home() {
               Contact me
             </Link>
           </div>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </div>
   );
 }

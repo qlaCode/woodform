@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { motion } from "framer-motion";
 import { Language, useLanguage } from "./LanguageContext";
 import { translations } from "./translations";
 
@@ -31,27 +32,55 @@ export default function Header() {
   ];
 
   return (
-    <header className="fixed top-0 left-0 right-0 bg-white shadow-md z-10">
+    <motion.header 
+      initial={{ y: -100, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.4, ease: "easeOut" }}
+      className="fixed top-0 left-0 right-0 bg-white shadow-md z-10"
+    >
       <div className="max-w-7xl mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
-          <div className="flex items-center">
-            <img
+          <motion.div 
+            initial={{ x: -50, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ delay: 0.1, duration: 0.3, ease: "easeOut" }}
+            className="flex items-center"
+          >
+            <motion.img
+              initial={{ scale: 0, rotate: -180 }}
+              animate={{ scale: 1, rotate: 0 }}
+              transition={{ delay: 0.2, duration: 0.4, ease: "backOut" }}
               src="/woodpecker.gif"
               alt="Woodpecker"
               className="w-12 md:w-16 mr-2 transform scale-x-[-1]"
             />
             <Link to="/" className="flex flex-col">
-              <h1 className="text-[#10A588] text-2xl md:text-4xl font-mono font-medium">
+              <motion.h1 
+                initial={{ y: -20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.15, duration: 0.3, ease: "easeOut" }}
+                className="text-[#10A588] text-2xl md:text-4xl font-mono font-medium"
+              >
                 Woodform
-              </h1>
-              <h3 className="text-slate-800 text-sm md:text-xl font-mono">
+              </motion.h1>
+              <motion.h3 
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.25, duration: 0.3, ease: "easeOut" }}
+                className="text-slate-800 text-sm md:text-xl font-mono"
+              >
                 Quentin Lamare
-              </h3>
+              </motion.h3>
             </Link>
-          </div>
+          </motion.div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-6">
+          <motion.nav 
+            initial={{ x: 50, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ delay: 0.2, duration: 0.3, ease: "easeOut" }}
+            className="hidden md:flex items-center space-x-6"
+          >
             <Link to="/" className={navLinkClass("/")}>
               {translations.nav.home[selectedLanguage]}
             </Link>
@@ -82,7 +111,7 @@ export default function Header() {
                 </button>
               ))}
             </div>
-          </nav>
+          </motion.nav>
 
           {/* Mobile Menu Button */}
           <button onClick={toggleMenu} className="md:hidden text-slate-800">
@@ -176,6 +205,6 @@ export default function Header() {
           </nav>
         )}
       </div>
-    </header>
+    </motion.header>
   );
 }

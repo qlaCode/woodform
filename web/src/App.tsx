@@ -11,6 +11,7 @@ import { Footer } from "./components/Footer";
 import { GalleryProvider } from "./components/GalleryContext";
 import Header from "./components/Header";
 import { LanguageProvider } from "./components/LanguageContext";
+import MainContent from "./components/MainContent";
 import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
@@ -29,7 +30,7 @@ function App() {
       <GalleryProvider>
         <div className="flex flex-col min-h-screen">
           <Header />
-          <main className="flex-grow pt-32 max-w-7xl mx-auto px-4 w-full">
+          <MainContent>
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/gallery" element={<BlogCardList />} />
@@ -37,7 +38,7 @@ function App() {
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
             </Routes>
-          </main>
+          </MainContent>
           <ScrollToTop />
           <Footer />
         </div>

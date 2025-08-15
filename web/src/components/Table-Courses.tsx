@@ -75,6 +75,7 @@ const WoodworkingEducation = () => {
     duration: exp.duration[selectedLanguage] || exp.duration.en,
     course: exp.course[selectedLanguage] || exp.course.en,
     institution: exp.institution.text,
+    institutionUrl: exp.institution.url,
     location: exp.location,
   }));
 
@@ -86,12 +87,8 @@ const WoodworkingEducation = () => {
     );
   }
 
-  const getInstitutionUrl = (institutionName: string) => {
-    // Remove language-specific parts of the institution name to match with URLs
-    const baseInstitutionName = Object.keys(institutionUrls).find((key) =>
-      institutionName.startsWith(key.split(" (")[0])
-    );
-    return baseInstitutionName ? institutionUrls[baseInstitutionName] : "#";
+  const getInstitutionUrl = (institutionUrl: string | undefined) => {
+    return institutionUrl || "#";
   };
 
   return (
@@ -133,7 +130,7 @@ const WoodworkingEducation = () => {
                 <td className="p-3">{course.course}</td>
                 <td className="p-3">
                   <a
-                    href={getInstitutionUrl(course.institution)}
+                    href={getInstitutionUrl(course.institutionUrl)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-[#10A588] hover:text-blue-800 hover:underline underline"
@@ -165,7 +162,7 @@ const WoodworkingEducation = () => {
             <div className="text-sm space-y-1 text-left">
               <div>
                 <a
-                  href={getInstitutionUrl(course.institution)}
+                  href={getInstitutionUrl(course.institutionUrl)}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-[#10A588] hover:text-blue-800 hover:underline underline"
